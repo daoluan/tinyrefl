@@ -32,7 +32,6 @@ reflection in C++
 	#include <stdio.h>
 
 	#include "action_base.h"
-	#include "action_set.h"
 
 	int main()
 	{

@@ -3,11 +3,10 @@
 
 #define DESCRIPTOR_DB_DEC(Classname) \
 namespace tinyrefl { \
-class Descriptor \
+struct Descriptor \
 { \
-public: \
-    std::string name_; \
-    Classname *handler_base_; \
+    std::string name; \
+    Classname *msgptr; \
 }; \
 class DescriptorDatabase \
 { \
@@ -15,23 +14,23 @@ public: \
     std::map<std::string, Descriptor> kdd; \
     void AddDescriptor(Descriptor d) \
     { \
-        kdd[d.name_] = d; \
+        kdd[d.name] = d; \
     } \
     Classname *FindHandlerByName(const std::string &name) \
     { \
         if (kdd.find(name) == kdd.end()) \
             return NULL; \
-        return kdd[name].handler_base_; \
+        return kdd[name].msgptr; \
     } \
     void GlobalShutDown() \
     { \
         std::map<std::string, Descriptor>::iterator it = kdd.begin(); \
         for (; it != kdd.end(); it++) \
         { \
-            if (it->second.handler_base_) \
+            if (it->second.msgptr) \
             { \
-                delete it->second.handler_base_; \
-                it->second.handler_base_ = NULL; \
+                delete it->second.msgptr; \
+                it->second.msgptr = NULL; \
             } \
         } \
     } \
@@ -116,8 +115,8 @@ static void Classname##__abksdfjsdkfdk() \
     tinyrefl::InitDatabaseOnce(); \
     Classname::Refl(); \
     tinyrefl::Descriptor d; \
-    d.name_ = #Classname; \
-    d.handler_base_ = Classname::GetDefaultInstance(); \
+    d.name = #Classname; \
+    d.msgptr = Classname::GetDefaultInstance(); \
     tinyrefl::kdb->AddDescriptor(d); \
 } \
 static struct Classname##_Tabksdfjsdkfdk \

@@ -52,8 +52,10 @@
     Classname *New() { return new Classname(); }                         \
     static void Refl() { default_instance_ = new Classname(); }          \
     static Classname *GetDefaultInstance() { return default_instance_; } \
+                                                                         \
    private:                                                              \
     static Classname *default_instance_;                                 \
+                                                                         \
    public:
 #define TINYREFL_CLASS_DEC_END(Classname) \
   }                                       \
@@ -65,8 +67,10 @@
     Classname *New() { return new Classname(); }                         \
     static void Refl() { default_instance_ = new Classname(); }          \
     static Classname *GetDefaultInstance() { return default_instance_; } \
+                                                                         \
    private:                                                              \
     static Classname *default_instance_;                                 \
+                                                                         \
    public:
 #define TINYREFL_SUBCLASS_DEC_END(Classname, Parent) \
   }                                                  \
